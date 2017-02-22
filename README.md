@@ -51,10 +51,16 @@ plots relative contribution of inhertiance classes to VarP
 Crowley JJ, Kim Y, Lenarcic AB, Quackenbush CR, Barrick C, Adkins DE, Shaw GS, Miller DR, Pardo Manuel de Villena F, Sullivan PF, 
 Valdar W (2014) Genetics of adverse reactions to haloperidol in a mouse diallel: A drug-placebo experiment and Bayesian causal analysis. 
 *Genetics* 196(1):321-47.  
-Griffing B (1956) Concept of general and specific combining ability in relation to diallel crossing systems. *Aust. J. Biol. Sci.* 9:463-493.  
+
+Griffing B (1956) Concept of general and specific combining ability in relation to diallel crossing systems. *Aust. J. Biol. Sci.* 9:463-493.   
+
 Lenarcic AB, Svenson KL, Churchill GA, Valdar W (2012) A general Bayesian approach to analyzing diallel crosses of inbred strains. 
 *Genetics* 190:413-435. doi: 10.1534/genetics.111.132563   
+
 Rosyara U (2014) plantbreeding: Analysis and visualization of data from plant breeding and genetics experiments. 
-http://R-Forge.R-project.org/projects/plantbreeding/  
-van Buuren S and Groothuis-Outshoorn K (2011) mice: multivariate imputation by chained equations in R. *J. Stat. Softw.* 45:1-67
+http://R-Forge.R-project.org/projects/plantbreeding/   
+
+van Buuren S and Groothuis-Outshoorn K (2011) mice: multivariate imputation by chained equations in R. *J. Stat. Softw.* 45:1-67  
+
+BayesDiallel website: http://valdarlab.unc.edu/software/bayesdiallel/BayesDiallel.html
 
