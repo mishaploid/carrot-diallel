@@ -5,14 +5,21 @@
 # ------------------------------------------------------------------------------
 
 library(plyr)
+library(tidyr)
 library(ggplot2)
 
-setwd("~/Documents/carrot-diallel/")
+setwd("~/Documents/carrot-diallel-all-files/")
 
-# read in parental data
+# ------------------------------------------------------------------------------
+# read in parental data, subset, and calculate shoot:root ratio
+# ------------------------------------------------------------------------------
 pMeans <- read.csv("parentalData.csv", header = TRUE) 
 
-# calculate raito of shoot to root biomass (note - no ln(x) transformations in this data)
+# subset to exclude extra info (plot, root source, etc.)
+pMeans <- pMeans[,c(2, 9:14)]
+
+# calculate raito of shoot to root biomass 
+# note: no ln(x) transformations in this data
 pMeans$ratio <- pMeans$dlw/pMeans$drw 
 
 # subset new data frames to plot A and B lines separately
@@ -26,14 +33,10 @@ pMeans$pedigree <- revalue(pMeans$pedigree, c("B7262A" = "B7262", "B7262B" = "B7
                                               "P0159B" = "P0159", "P6139A" = "P6139", "P6139B" = "P6139",
                                               "S.C. x Nbh2189B" = "Nbh2189"))
 
-# set factor levels for all data sets 
+# set factor levels for parental lines
 pMeans$pedigree <- factor(pMeans$pedigree, levels = c("L6038", "L7550", "P0159", "Nbh2189", "P6139", "B7262"))
 
-# calculate means and confidence intervals
-pMeansCI <- aggregate(. ~ pedigree, data = pMeans, 
-                      FUN = function(x) c(mu = mean(x), 
-                                          se = sd(x)/sqrt(length(x))))
-
+# extract trait names
 traits <- names(pMeans[2:8]) # extract trait names 
 
 # stack data by trait (long format)
