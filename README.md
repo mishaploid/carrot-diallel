@@ -22,7 +22,7 @@ plots phenotypic values and location of missing data by cross, year, and replica
 3. **diallel correlations.R**  
 calculates and plots Pearson's correlations for phenotypes
 4. **diallel imputation.R**  
-uses mice package to impute missing data (see van Buuren and Groothuis-Oudshoorn 2011)
+uses mice package to impute missing data (see van Buuren and Groothuis-Oudshoorn 2011); generates imputed datasets
 5. **pooled diallel analysis.R**  
 computes Griffing's ANOVA and effect estimates (i.e. GCA, SCA, reciprocal) for each imputed dataset and combines results. 
 Calls functions from three other scripts (listed below)  
