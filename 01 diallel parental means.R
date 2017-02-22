@@ -4,6 +4,8 @@
 #   06 January 2017
 # ------------------------------------------------------------------------------
 
+# This script plots parental means and 95% confidence intervals 
+
 library(plyr)
 library(tidyr)
 library(ggplot2)
@@ -23,14 +25,23 @@ pMeans <- pMeans[,c(2, 9:14)]
 pMeans$ratio <- pMeans$dlw/pMeans$drw 
 
 # subset new data frames to plot A and B lines separately
-bLines <- subset(pMeans, pedigree %in% c("L6038B", "L7550B", "P0159B", "Nbh2189B", "P6139B", "B7262B"))
-aLines <- subset(pMeans, !(pedigree %in% c("L6038B", "L7550B", "P0159B", "Nbh2189B", "P6139B", "B7262B")))
+bLines <- subset(pMeans, pedigree %in% c("L6038B", "L7550B", "P0159B", 
+                                         "Nbh2189B", "P6139B", "B7262B"))
+aLines <- subset(pMeans, !(pedigree %in% c("L6038B", "L7550B", "P0159B", 
+                                           "Nbh2189B", "P6139B", "B7262B")))
 
 # recode inbred line names to combine A and B lines
-pMeans$pedigree <- revalue(pMeans$pedigree, c("B7262A" = "B7262", "B7262B" = "B7262", "L6038A" = "L6038",
-                                              "L6038B" = "L6038", "L7550A" = "L7550", "L7550B" = "L7550",
-                                              "Nbh2189B" = "Nbh2189", "P.S.C. x P0159B" = "P0159",
-                                              "P0159B" = "P0159", "P6139A" = "P6139", "P6139B" = "P6139",
+pMeans$pedigree <- revalue(pMeans$pedigree, c("B7262A" = "B7262", 
+                                              "B7262B" = "B7262", 
+                                              "L6038A" = "L6038",
+                                              "L6038B" = "L6038", 
+                                              "L7550A" = "L7550", 
+                                              "L7550B" = "L7550",
+                                              "Nbh2189B" = "Nbh2189", 
+                                              "P.S.C. x P0159B" = "P0159",
+                                              "P0159B" = "P0159", 
+                                              "P6139A" = "P6139", 
+                                              "P6139B" = "P6139",
                                               "S.C. x Nbh2189B" = "Nbh2189"))
 
 # set factor levels for parental lines
