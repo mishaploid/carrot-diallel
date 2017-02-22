@@ -3,13 +3,21 @@
 #   S. Turner 
 #   06 January 2017       
 # ------------------------------------------------------------------------------
+
+# Calculates Pearson's correlations and significance for traits of interest
+# Plots correlations as a heatmap
+
 library(plyr)
 library(corrplot)
 library(psych)
 library(reshape2)
 library(ggplot2)
 
-setwd("~/Documents/carrot-diallel")
+setwd("~/Documents//carrot-diallel")
+
+# ------------------------------------------------------------------------------
+# read in data, apply transformations, rename variables
+# ------------------------------------------------------------------------------
 # read in raw data
 diallelRaw <- read.csv("diallelRawData.csv", header = TRUE)
 
@@ -27,12 +35,16 @@ diallelRaw <- rename(diallelRaw, c("midHeight" = "height (80DAP)",
                                        "drw" = "root biomass", 
                                        "ratio" = "shoot:root ratio"))
 
+# ------------------------------------------------------------------------------
 # create correlation matrix for selected traits
+# ------------------------------------------------------------------------------
 correlation <- cor(diallelRaw[,c(9:12, 14, 16:17)], method = "pearson", 
                    use = "complete.obs")
 
+# ------------------------------------------------------------------------------
 # function to calculate significance of correlations
 # source: https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html
+# ------------------------------------------------------------------------------
 cor.mtest <- function(mat, conf.level = 0.95) {
   mat <- as.matrix(mat)
   n <- ncol(mat)
@@ -50,22 +62,32 @@ cor.mtest <- function(mat, conf.level = 0.95) {
   return(list(p.mat, lowCI.mat, uppCI.mat))
 }
 
+# ------------------------------------------------------------------------------
 # export matrix of p-values
+# ------------------------------------------------------------------------------
 p.mat <- cor.mtest(diallelRaw[,c(9:12, 14, 16:17)])
 
+# ------------------------------------------------------------------------------
 # create matrix for significance notations 
 # * = P < 0.05, ** = P < 0.01, *** = P < 0.001
+# ------------------------------------------------------------------------------
 sigCodes <- ifelse(p.mat[[1]] > 0.05, "NS", 
                    ifelse(p.mat[[1]] > 0.01, "*", 
                           ifelse(p.mat[[1]] > 0.001, "**", "***")))
 
+# set diagonal to NA
 sigCodes[upper.tri(sigCodes)] <- NA
 
+# ------------------------------------------------------------------------------
 # combine correlation coefficients and significance codes into single matrix
+# ------------------------------------------------------------------------------
 combinedMat <- lowerUpper(upper = sigCodes, lower = round(correlation, 2), 
                           diff = FALSE)
 diag(combinedMat) <- ""
 
+# ------------------------------------------------------------------------------
+# construct the plot! 
+# ------------------------------------------------------------------------------
 # create labels as input for geom_text
 labels <- melt(combinedMat, na.rm = TRUE)
 labels$value <- revalue(labels$value, c("0.7" = "0.70", "0.1" = "0.10"))

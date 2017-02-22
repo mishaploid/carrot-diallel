@@ -1,10 +1,10 @@
 # ------------------------------------------------------------------------------
 #   Griffing's analysis & combining abilities for imputed data
 #   S. Turner 
-#   29 August 2016        
+#   19 February 2017        
 # ------------------------------------------------------------------------------
 
-# this script calculates Griffing's ANOVA, general combining ability (GCA),
+# calculates and pools Griffing's ANOVA, general combining ability (GCA),
 # specific combining ability (SCA), and reciprocal effects for multiply 
 # imputed data
 
@@ -27,7 +27,7 @@ poolingDf$female <- as.factor(poolingDf$female)
 # ------------------------------------------------------------------------------
 
 # source modified dialleleI function (diallelI) from plantbreeding package
-source("~/Documents/carrot-diallel/Diallel_analysis_functions_ST.R")
+source("~/Documents/carrot-diallel/05A - Diallel_analysis_functions_ST.R")
 
 # remove original data w/NAs first (.imp = 0)
 poolingDf2 <- poolingDf[!poolingDf$.imp==0,]
@@ -72,9 +72,9 @@ MSrep <- sapply(anvFull, "[", 10, 2)
 MSE <- sapply(anvFull, "[", 11, 2) #sD
 
 # degrees of freedom 
-# p = # of parents
-# r = # of reps
-# y = # of years
+#   p = # of parents
+#   r = # of reps
+#   y = # of years
 p <-  6
 r <- 2
 y <- 3
@@ -192,7 +192,7 @@ poolingDf$cross <- paste(pmin(as.numeric(poolingDf$female),
 poolingDf$cross <- as.factor(poolingDf$cross)
 
 # call calcSCA function 
-source("~/Documents/carrot-diallel/calcSCA.R")
+source("~/Documents/carrot-diallel/05B - calcSCA.R")
 
 # loop to calculate SCA for m imputed data sets
 # replace "height" with trait of interest
@@ -241,7 +241,7 @@ poolingDf$orderedCross <- poolingDf$female:poolingDf$male
 poolingDf$reciprocalCross <- poolingDf$male:poolingDf$female 
 
 # call calcRecip function
-source("~/Documents/carrot-diallel/calcRecip.R")
+source("~/Documents/carrot-diallel/05C - calcRecip.R")
 
 # loop to calculate reciprocal cross differences
 # creates new variable with reciprocal cross values

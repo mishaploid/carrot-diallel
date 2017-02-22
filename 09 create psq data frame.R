@@ -49,7 +49,9 @@ createPsqDF <- function(x) {
 PSqTmp <- do.call("rbind", lapply(list.files(pattern = "*psq.csv",
                                              full = TRUE), createPsqDF))
 
+# ------------------------------------------------------------------------------
 # store output in .csv
+# ------------------------------------------------------------------------------
 write.csv(PSqTmp, "PSq_all.csv", row.names = FALSE)
 
 

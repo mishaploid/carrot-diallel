@@ -5,6 +5,14 @@
 #   20 February 2017
 # ------------------------------------------------------------------------------
 
+# inputs:
+#   trait = name of column with phenotype
+#   .id = observation # (from mice mids object) (factor)
+#   year = name of column with location/year information (factor)
+#   cross = column with hybrid (jk = kj) (factor)
+#   recip = column with hybrid (jk != kj) (ordered by male and female parent)
+#   data = name of dataframe where info is stored
+
 calcRecip <- function(trait, .id, year, cross, recip, data) {
   df <- data.frame(trait = data[, trait], .id = data[, .id], year = data[, year],
                    cross = data[, cross], recip = data[, recip])

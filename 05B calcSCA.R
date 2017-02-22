@@ -5,6 +5,15 @@
 #   20 February 2017
 # ------------------------------------------------------------------------------
 
+# inputs:
+#   trait = name of column with phenotype
+#   .id = observation # (from mice mids object) (factor)
+#   year = name of column with location/year information (factor)
+#   female = column with female parent (j) identifier (factor)
+#   male = column with male parent (k) identifier (factor)
+#   cross = column with hybrid (jk = kj) (factor)
+#   data = name of dataframe where info is stored
+
 calcSCA <- function(trait, .id, year, female, male, cross, data) {
   df <- data.frame(trait = data[, trait], .id = data[, .id], year = data[, year],
                    female = data[, female],

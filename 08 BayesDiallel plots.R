@@ -4,7 +4,7 @@
 #   18 July 2016
 # ------------------------------------------------------------------------------
 
-# This script plots observed vs. expected values (TwoDiallelPlot), highest
+# Code to plot observed vs. expected values (TwoDiallelPlot), highest
 # posterior density (HPD) intervals (PlotHPD), and strawplots for AFD objects
 
 # ------------------------------------------------------------------------------

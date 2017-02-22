@@ -32,8 +32,9 @@ diallelRaw$female <- as.factor(diallelRaw$female)
 diallelRaw$stand <- as.factor(diallelRaw$stand)
 
 # ------------------------------------------------------------------------------
-# check % missing data (VIM package)
-
+# visualize missing data (VIM package) 
+# ------------------------------------------------------------------------------
+# % missing
 pMiss <- function(x){sum(is.na(x))/length(x)*100}
 apply(diallelRaw, 2, pMiss) # apply pMiss function over columns
 
@@ -41,8 +42,10 @@ apply(diallelRaw, 2, pMiss) # apply pMiss function over columns
 md.pattern(diallelRaw) 
 
 # visualize missing data - Fig S2
-aggr_plot <- aggr(diallelRaw, col = c('navyblue', 'red'), numbers = TRUE, labels = names(diallelRaw),
-                  cex.axis = .7, gap = 3, ylab = c("Histogram of missing data", "Pattern"))
+aggr_plot <- aggr(diallelRaw, col = c('navyblue', 'red'), numbers = TRUE, 
+                  labels = names(diallelRaw),
+                  cex.axis = .7, gap = 3, 
+                  ylab = c("Histogram of missing data", "Pattern"))
 
 # check MCAR (missing completely at random) assumption
 # distribution of x when y is missing shown in red
@@ -52,10 +55,11 @@ marginplot(diallelRaw[c(8,14)]) # dist of midHeight when frw is missing
 # ------------------------------------------------------------------------------
 # impute missing data for diallel data
 # Multivariate Imputation by Chained Equations (MICE)
-  # m = # of imputations
-  # meth = "pmm" = predictive mean matching 
-  # maxit = number of iterations (default is 5)
-  # default predictor is all other columns in data
+#   m = # of imputations
+#   meth = "pmm" = predictive mean matching 
+#   maxit = number of iterations (default is 5)
+#   default predictor is all other columns in data
+# ------------------------------------------------------------------------------
 
 # 50 chains w/ 70 iterations - full data
 tempdatafull <- mice(data = diallelRaw, m = 50, method = "pmm", 
@@ -72,29 +76,38 @@ plot(tempdatafull, y = c("midHeight", "midWidth", "height", "width",
      header = "Convergence (70 Iterations)", layout = c(2, 8), lwd = 0.8)
 dev.off()
 
+# ------------------------------------------------------------------------------
 # plot distribution of imputed (pink) and observed (blue) data by year
+# ------------------------------------------------------------------------------
 xnames <- colnames(tempdatafull$data[,7:14])
 pltList <- list()
 for (i in xnames) {
   pltName <- paste("p", i, sep = "")
   form <- formula(paste("~", i, "|", "year"))
   pltList[[pltName]] <- densityplot(tempdatafull, form, groups = .imp, 
-                                    col = c("#006CC2CC", rep("#B61A51CC", 50)), lwd = c(2, rep(1, 50)))
+                                    col = c("#006CC2CC", rep("#B61A51CC", 50)), 
+                                    lwd = c(2, rep(1, 50)))
   print(pltList[[pltName]])
 }
 
+# ------------------------------------------------------------------------------
 # export obs vs imputed (combined over years) - Fig S4
+# ------------------------------------------------------------------------------
 png("50imp-70iter-impvsobs.png", height = 8, width = 6, units = "in", res = 600)
 densityplot(tempdatafull, main = "Imputed (pink) and Observed (blue) distributions",
             lwd = 1, layout = c(2,4))
 dev.off()
 
+# ------------------------------------------------------------------------------
 # export obs vs imputed (by year) - Fig S5
+# ------------------------------------------------------------------------------
 png("impvsobs-year.png", height = 8, width = 8, units = "in", res = 600)
 grid.arrange(pltList[[5]], pltList[[6]], pltList[[7]], pltList[[8]])
 dev.off()
 
+# ------------------------------------------------------------------------------
 # plot by year - observed data (blue line) and imputed data (pink lines)
+# ------------------------------------------------------------------------------
 pdf("impvsobs-year.pdf", height = 3, width = 6)
 xnames <- colnames(tempdatafull$data[,7:14])
 for (i in xnames) {
@@ -107,10 +120,11 @@ dev.off()
 
 # ------------------------------------------------------------------------------
 # save imputed dataset
-
+# ------------------------------------------------------------------------------
 write.csv(complete(tempdatafull, "long", include = TRUE), 
           file = "70 iterations full data.csv",
           row.names = FALSE)
+
 
 # ------------------------------------------------------------------------------
 # impute year 3 from year 1, 50 imputations & 50 iterations
