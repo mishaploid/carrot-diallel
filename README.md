@@ -24,7 +24,7 @@ calculates and plots Pearson's correlations for phenotypes
 4. **diallel imputation.R**  
 uses mice package to impute missing data (see van Buuren and Groothuis-Oudshoorn 2011); generates imputed datasets
 5. **pooled diallel analysis.R**  
-computes Griffing's ANOVA and effect estimates (i.e. GCA, SCA, reciprocal) for each imputed dataset and combines results. 
+computes Griffing's ANOVA and effect estimates (i.e. GCA, SCA, reciprocal) for each imputed dataset and combines results. See Raghunathan and Dong (2011) for details on pooling F-tests across imputed datasets. 
 Calls functions from three other scripts (listed below)  
       5A. **Diallel_analysis_functions_ST.R**   
           modified diallele1 function from plantbreeding package (Rosyara 2014); 
@@ -56,6 +56,8 @@ Griffing B (1956) Concept of general and specific combining ability in relation 
 
 Lenarcic AB, Svenson KL, Churchill GA, Valdar W (2012) A general Bayesian approach to analyzing diallel crosses of inbred strains. 
 *Genetics* 190:413-435. doi: 10.1534/genetics.111.132563   
+
+Raghunathan T and Dong Q (2011) Analysis of variance from multiply imputed data sets. Unpublished manuscript. http://www-personal.umich.edu/~teraghu/Raghunathan-Dong.pdf  
 
 Rosyara U (2014) plantbreeding: Analysis and visualization of data from plant breeding and genetics experiments. 
 http://R-Forge.R-project.org/projects/plantbreeding/   
