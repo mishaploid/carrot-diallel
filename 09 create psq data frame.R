@@ -10,7 +10,7 @@
 # ------------------------------------------------------------------------------
 # load AFD objects
 # ------------------------------------------------------------------------------
-source("~/Documents/carrot-diallel/09 read in AFD objects.R")
+source("~/Documents/carrot-diallel/07 read in AFD objects.R")
 
 # ------------------------------------------------------------------------------
 # Diallel Variance Projection (PSq)

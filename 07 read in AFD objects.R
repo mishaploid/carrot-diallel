@@ -18,7 +18,7 @@ require(R.oo, warn.conflicts=FALSE, quietly=TRUE)
 # ------------------------------------------------------------------------------
 # read in data, set factors, and apply transformations
 # ------------------------------------------------------------------------------
-setwd("~/Documents/carrot-diallel")
+setwd("~/Documents/carrot-diallel/")
 dialleltmp <- read.csv("diallelRawData.csv", header = TRUE)
 
 dialleltmp$year <- as.numeric(dialleltmp$year)
@@ -47,5 +47,5 @@ for (i in varNames) {
   setwd(paste0("~/Documents/carrot-diallel/BayesDiallel/", i, sep = ""))
   x <- load(paste0("SaveAFDBackUp", i, ".RData", sep = ""))
   results[[i]] <- get(x)
-  setwd("~/Documents/carrot-diallel")
+  setwd("~/Documents/carrot-diallel/")
 }

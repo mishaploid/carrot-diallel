@@ -11,7 +11,7 @@
 # load AFD objects
 # ------------------------------------------------------------------------------
 setwd("~/Documents/carrot-diallel/")
-source("~/Documents/carrot-diallel/09 read in AFD objects.R")
+source("~/Documents/carrot-diallel/07 read in AFD objects.R")
 
 # ------------------------------------------------------------------------------
 # Observed vs. expected plots - expected shows predictions based on observed data
