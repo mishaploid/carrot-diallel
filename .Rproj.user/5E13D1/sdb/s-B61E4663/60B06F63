@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : ".Rproj\n.Rhistory\n.RData\n.Ruserdata\n/results\n/old",
+    "contents" : ".Rproj.user\n.Rproj\n.Rhistory\n.RData\n.Ruserdata\n/results\n/old",
     "created" : 1511216822980.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2867964200",
+    "hash" : "3297932284",
     "id" : "60B06F63",
-    "lastKnownWriteTime" : 1511216842,
-    "last_content_update" : 1511216842252,
+    "lastKnownWriteTime" : 1511216866,
+    "last_content_update" : 1511216866951,
     "path" : "~/GitHub/carrot-diallel/.gitignore",
     "project_path" : ".gitignore",
     "properties" : {
