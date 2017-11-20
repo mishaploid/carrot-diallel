@@ -10,6 +10,9 @@
 
 library(mice)
 library(data.table)
+library(Hmisc)
+library(reshape2)
+library(ggplot2)
 
 setwd("~/GitHub/carrot-diallel/data")
 
@@ -169,23 +172,60 @@ summary(gca_i)
 gca_pooled <- summary(pool(gca_i))
 gca_pooled
 
+# use with and pool in mice to summarize GCA estimates 
+# GCA estimates combined over all environments
+# Example shown for canopy height 
+# change y to reflect trait of interest (e.g. "height")
+gca_i <- with(gcaData, lm(height - mean(height) ~ parent-1)) 
+
+summary(gca_i)
+gca_pooled <- summary(pool(gca_i))
+gca_pooled
+
 # GCA estimates for each environment (if significant GxE & GCAxE present)
-gca_i_E <- with(gcaData, lm(height - mean(height) ~ parent:year-1))
-summary(gca_i_E)
-gcaxE_pooled <- summary(pool(gca_i_E))
-gcaxE_pooled
+gca_long <- complete(gcaData, action = "long", include = TRUE)
+
+gca_wi2015 <- gca_long[gca_long$year == "WI2015",] # subset by location
+gca_ca2015 <- gca_long[gca_long$year == "CA2015" & gca_long$.imp == 0,] # no missing data
+gca_ca2016 <- gca_long[gca_long$year == "CA2016",]
+
+gca_wi2015 <- as.mids(gca_wi2015, .imp = 1, .id = 2)
+# gca_ca2015 <- as.mids(gca_ca2015, .imp = 1, .id = 2) # no missing data
+gca_ca2016 <- as.mids(gca_ca2016, .imp = 1, .id = 2)
+
+gcaxe_wi2015 <- with(gca_wi2015, lm(height - mean(height) ~ parent-1))
+gcaxe_ca2015 <- with(gca_ca2015, lm(height - mean(height) ~ parent-1))
+gcaxe_ca2016 <- with(gca_ca2016, lm(height - mean(height) ~ parent-1))
+
+gca_wi2015_pooled <- summary(pool(gcaxe_wi2015))
+gca_ca2015_pooled <- summary(gcaxe_ca2015)
+gca_ca2016_pooled <- summary(pool(gcaxe_ca2016))
+
+# simple output
+bound <- cbind(gca_wi2015_pooled[,1], gca_ca2015_pooled$coefficients[,1], gca_ca2016_pooled[,1])
+
+colnames(bound) <- c("WI2015", "CA2015", "CA2016")
+
+rcorr(bound, type = "spearman") # rank correlation among environments
+
+# output with SE
+gca_wi2015_pooled <- as.data.frame(gca_wi2015_pooled[,c(1:3,4)])
+gca_wi2015_pooled$parent <- row.names(gca_wi2015_pooled)
+gca_ca2015_pooled <- as.data.frame(gca_ca2015_pooled[4])
+colnames(gca_ca2015_pooled) <- colnames(gca_wi2015_pooled)
+gca_ca2015_pooled$parent <- row.names(gca_ca2015_pooled)
+gca_ca2016_pooled <- as.data.frame(gca_ca2016_pooled[,c(1:3,4)])
+gca_ca2016_pooled$parent <- row.names(gca_ca2016_pooled)
+
+gca_df <- combine(gca_wi2015_pooled, gca_ca2015_pooled, gca_ca2016_pooled)
 
 # export data
-write.csv(gcaxE_pooled, "~/GitHub/carrot-diallel/results/height/gcabyyear_height.csv")
-
-# simplify output for interaction plot
-gca_df <- read.csv("~/GitHub/carrot-diallel/results/height/gcabyyear_height.csv", header = TRUE)
-
-gca_df <- data.frame(colsplit(gca_df$X, ":", names = c("parent", "year")), 
-                     gca = gca_df$est, se = gca_df$se)
+write.csv(gca_df, "~/GitHub/carrot-diallel/results/height/gcabyyear_height.csv")
 
 # plot GCAxE interactions
-interaction.plot(gca_df$parent, gca_df$year, gca_df$gca, las = 2)
+gca_df <- read.csv("~/GitHub/carrot-diallel/results/height/gcabyyear_height.csv", header = TRUE)
+
+interaction.plot(gca_df$parent, gca_df$source, gca_df$est, las = 2)
 abline(h = 0, col = "red")
 
 # ------------------------------------------------------------------------------
@@ -195,17 +235,19 @@ abline(h = 0, col = "red")
 gca_df$parent <- revalue(gca_df$parent, c("parent1" = "L6038", "parent2" = "L7550", 
                                                "parent3" = "P0159", "parent4" = "Nbh2189", 
                                                "parent5" = "P6139", "parent6" = "B7262"))
-gca_df$year <- gsub("year", "", gca_df$year)
-gca_df$location <- factor(gca_df$year, levels = c("WI2015", "CA2015", "CA2016"))
+gca_df$source <- revalue(gca_df$source, c("gca_wi2015_pooled" = "WI2015", 
+                                          "gca_ca2015_pooled" = "CA2015", 
+                                          "gca_ca2016_pooled" = "CA2016"))
+gca_df$source <- factor(gca_df$source, levels = c("WI2015", "CA2015", "CA2016"))
 
 gca_df$parent <- factor(gca_df$parent, levels = c("L6038", "L7550", "P0159", "Nbh2189", "P6139", "B7262"))
 
 # plot GCA by year interactions with SE bars
-p1 <- ggplot(gca_df, aes(x = location, y = gca, colour = parent, group = parent)) + 
+p1 <- ggplot(gca_df, aes(x = source, y = est, colour = parent, group = parent)) + 
   geom_point(size = 2, aes(shape = parent)) +
   scale_shape_discrete(name = "Parental Line") + 
   geom_line(size = 0.75) +
-  geom_errorbar(aes(ymin = gca-se, ymax = gca+se), width = 0.05, size = 0.5) + 
+  geom_errorbar(aes(ymin = est-se, ymax = est+se), width = 0.05, size = 0.5) + 
   ylab("GCA for Canopy Height (130 DAP)") +
   xlab("") +   
   ylim(-11, 10) + 
@@ -221,7 +263,7 @@ p1 <- ggplot(gca_df, aes(x = location, y = gca, colour = parent, group = parent)
         axis.title.x = element_blank())
 p1
 
-ggsave("~/GitHub/results/gcaxe_height.eps", height = 80, width = 129, units = "mm")
+ggsave("~/GitHub/carrot-diallel/results/gcaxe_height.eps", height = 80, width = 129, units = "mm")
 
 # ------------------------------------------------------------------------------
 # pool specific combining ability (SCA) estimates (e.g. midseason height)
