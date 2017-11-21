@@ -1,11 +1,11 @@
 # ------------------------------------------------------------------------------
-#   Plot rankings by year
+#   Read in AFD objects for each growing environment
 #   S. Turner 
 #   18 July 2016
 # ------------------------------------------------------------------------------
 
 # This script reads in AFD objects from the DiallelAnalyzer function and stores
-# them in a list ('results')
+# them in a list for each location (e.g. results_location)
 
 try(require(lattice, quietly=TRUE, warn.conflicts=FALSE), silent=TRUE)
 try(require(coda, quietly=TRUE, warn.conflicts=FALSE), silent=TRUE)
@@ -18,8 +18,8 @@ require(R.oo, warn.conflicts=FALSE, quietly=TRUE)
 # ------------------------------------------------------------------------------
 # read in data, set factors, and apply transformations
 # ------------------------------------------------------------------------------
-setwd("~/Documents/carrot-diallel-all-files/carrot-diallel-scripts")
-dialleltmp <- read.csv("diallelRawData.csv", header = TRUE)
+setwd("~/GitHub/carrot-diallel/")
+dialleltmp <- read.csv("data/diallelRawData.csv", header = TRUE)
 
 dialleltmp$year <- as.numeric(dialleltmp$year)
 dialleltmp$rep <- as.factor(dialleltmp$rep)
@@ -44,26 +44,20 @@ varNames <- names(dialleltmp[,9:17])
 results_wi15 <- vector("list")
 
 for (i in varNames) {
-  setwd("~/Documents/carrot-diallel-all-files/BayesDiallel/wi2015")
-  x <- load(paste0("AFDBackUp_wi2015_", i, ".RData", sep = ""))
+  x <- load(paste0("~/GitHub/carrot-diallel/results/wi2015/AFDBackUp_wi2015_", i, ".RData", sep = ""))
   results_wi15[[i]] <- get(x)
-  setwd("~/Documents/carrot-diallel-all-files/")
 }
 
 results_ca15 <- vector("list")
 
 for (i in varNames) {
-  setwd("~/Documents/carrot-diallel-all-files/BayesDiallel/ca2015")
-  x <- load(paste0("AFDBackUp_ca2015_", i, ".RData", sep = ""))
+  x <- load(paste0("~/GitHub/carrot-diallel/results/ca2015/AFDBackUp_ca2015_", i, ".RData", sep = ""))
   results_ca15[[i]] <- get(x)
-  setwd("~/Documents/carrot-diallel-all-files/")
 }
 
 results_ca16 <- vector("list")
 
 for (i in varNames) {
-  setwd("~/Documents/carrot-diallel-all-files/BayesDiallel/ca2016")
-  x <- load(paste0("AFDBackUp_ca2016_", i, ".RData", sep = ""))
+  x <- load(paste0("~/GitHub/carrot-diallel/results/ca2016/AFDBackUp_ca2016_", i, ".RData", sep = ""))
   results_ca16[[i]] <- get(x)
-  setwd("~/Documents/carrot-diallel-all-files/")
 }
