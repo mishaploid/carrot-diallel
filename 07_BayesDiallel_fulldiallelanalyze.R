@@ -35,7 +35,7 @@ dialleltmp$ratio <- dialleltmp$dlw/dialleltmp$drw
 dialleltmp$is.female <- as.logical(0)
 
 # ------------------------------------------------------------------------------
-# load packages, model information, and priors
+# load model information and priors
 # ------------------------------------------------------------------------------
 
 # attach Piximus data to extract models

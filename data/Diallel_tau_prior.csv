@@ -1,4 +1,4 @@
-,aj,Genderaj,Gender.motherj,dominancej,Gender.dominancej,SymCrossjk,Gender.SymCrossjk,ASymCrossjkDkj,Gender.AsymCrossjkDkj,AllCrossjk,Gender.AllCrossjk,Mu,Gender.Av,BetaHybrid.Av,BetaHybrid.Gender.Av,midHeight,midWidth,height,width,flw,dlw,frw,drw
-m,0.2,0,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
-df,0.2,0,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
-Prob,0.5,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+,aj,Genderaj,motherj,Gender.motherj,dominancej,Gender.dominancej,SymCrossjk,Gender.SymCrossjk,ASymCrossjkDkj,Gender.AsymCrossjkDkj,AllCrossjk,Gender.AllCrossjk,Mu,Gender.Av,BetaHybrid.Av,BetaHybrid.Gender.Av,midHeight,midWidth,height,width,flw,dlw,frw,drw
+m,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+df,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Prob,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
