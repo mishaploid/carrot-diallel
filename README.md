@@ -15,42 +15,59 @@ prior information for BayesDiallel
 
 ## Scripts
 
-1. **diallel parental means.R**  
+**01_diallel_parental_means.R**  
 computes and plots means + 95% confidence intervals for parent phenotypes  
-2. **diallel missing data heatmap.R**  
+**02_missing_data_heatmap.R**  
 plots phenotypic values and location of missing data by cross, year, and replication
-3. **diallel correlations.R**  
+**03_phenotypic_correlations.R**  
 calculates and plots Pearson's correlations for phenotypes
-4. **diallel imputation.R**  
+**04_impute_missing_data.R**  
 uses mice package to impute missing data (see van Buuren and Groothuis-Oudshoorn 2011); generates imputed datasets for pooled diallel analysis
-5. **pooled diallel analysis.R**  
+**05_pooled_diallel_analysis.R**  
 computes Griffing's ANOVA and effect estimates (i.e. GCA, SCA, reciprocal) for each imputed dataset and combines results. 
 Calls functions from three other scripts (listed below)  
-      5A. **Diallel_analysis_functions_ST.R**   
-          modified diallele1 function from plantbreeding package (Rosyara 2014); 
-          allows calculation of Griffing's ANOVA with multiple environments; includes additional edits to 
-          SCA calculation from G. Ramstein  
-      5B. **calcSCA.R**  
-          function to calculate SCA estimates for multiple environments and pooling  
-      5C. **calcRecip.R**  
-          function to calculate reciprocal effect estimates for multiple environments and pooling  
-6. **BayesDiallel full diallel analyze.R**  
+      **05A_diallel_analysis_functions.R**   
+      modified diallele1 function from plantbreeding package (Rosyara 2014); 
+      allows calculation of Griffing's ANOVA with multiple environments; includes additional edits to 
+      SCA calculation from G. Ramstein  
+      **05B_calcSCA.R**  
+      function to calculate SCA estimates for multiple environments and pooling  
+      **05C_calcRecip.R**  
+      function to calculate reciprocal effect estimates for multiple environments and pooling  
+      **05D_pool_Griffing_Method3.R**  
+      Griffing's ANOVA using method III (without parents) to estimate Baker's ratio
+**06_GGE_biplots.R**  
+GGE biplots for diallel phenotypes & parents following Frutos et al. (2014) 
+**07_BayesDiallel_fulldiallelanalyze.R**  
 applies and stores AFD objects from DiallelAnalyzer function in BayesDiallel  
-7. **read in AFD objects.R**  
+**08_read_AFD_objects.R**  
 reads in AFD objects for subsequent analyses in BayesDiallel  
-8. **BayesDiallel plots.R**  
+**09_BayesDiallel_plots.R**  
 plots observed vs. expected phenotypes, highest posterior density (HPD) intervals, and strawplots 
 (see Lenarcic et al. 2012 and BayesDiallel documentation)   
-9. **create psq data frame.R**  
+**10_create_psq_df.R**  
 exports table of posterior PSq values (diallel variance projection [VarP] in Crowley et al. 2014) 
 for all traits  
-10. **p2 diallel variance projection plot.R**  
-plots relative contribution of inhertiance classes to VarP 
+**11_VarP_plot.R**  
+plots relative contribution of inhertiance classes to VarP  
+**12_degree_of_dominance.R**
+uses BayesDiallel AFD results to estimate the degree of dominance and the dominance index for crosses in a diallel (see Maurizio et al. 2018)  
+**13_BayesDiallel_fulldiallelanalyze_by_env.R**  
+applies and stores AFD objects for each environment  
+**14_read_AFD_by_env.R**  
+reads in AFD objects by environment
+**15_ranks_by_environment.R**  
+estimates and hybrid rankings in each environment
+**16_plot_ranks_by_environment.R**  
+plots hybrid rankings by environment
+
 
 ## References
 Crowley JJ, Kim Y, Lenarcic AB, Quackenbush CR, Barrick C, Adkins DE, Shaw GS, Miller DR, Pardo Manuel de Villena F, Sullivan PF, 
 Valdar W (2014) Genetics of adverse reactions to haloperidol in a mouse diallel: A drug-placebo experiment and Bayesian causal analysis. 
 *Genetics* 196(1):321-47.  
+
+Frutos E, Purificación Galindo M (2014) An interactive biplot implementation in R for modeling genotype-by-environment interaction. *Stoch Environ Res Risk Assess* 28:1629-1641.
 
 Griffing B (1956) Concept of general and specific combining ability in relation to diallel crossing systems. *Aust. J. Biol. Sci.* 9:463-493.   
 
